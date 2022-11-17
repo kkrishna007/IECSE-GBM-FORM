@@ -11,7 +11,7 @@ const BoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 19px;
-  background-color: #fff;
+  background-color: #050318;
   box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
   position: relative;
   overflow: hidden;
@@ -38,11 +38,7 @@ const BackDrop = styled(motion.div)`
   top: -290px;
   left: -70px;
   background: rgb(241, 196, 15);
-  background: linear-gradient(
-    58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
-  );
+  background: linear-gradient( 58deg, rgb(0 4 255) 20%, rgb(169 0 255) 100% );
 `;
 
 const HeaderContainer = styled.div`
@@ -60,13 +56,22 @@ const HeaderText = styled.h2`
   margin: 0;
 `;
 
+const HeaderImg = styled.img`
+  width:60px;
+  height:30px;
+  margin: 0;
+  z-index:99;
+  margin-top:40px;
+  
+`;
+
 const SmallText = styled.h5`
   color: #fff;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 13px;
   z-index: 10;
   margin: 0;
-  margin-top: 7px;
+  margin-top: 4px;
 `;
 
 const InnerContainer = styled.div`
@@ -99,7 +104,7 @@ const expandingTransition = {
 
 export function AccountBox(props) {
   const [isExpanded, setExpanded] = useState(false);
-  const [active, setActive] = useState("signin");
+  const [active, setActive] = useState("signup");
 
   const playExpandingAnimation = () => {
     setExpanded(true);
@@ -134,24 +139,27 @@ export function AccountBox(props) {
             variants={backdropVariants}
             transition={expandingTransition}
           />
-          {active === "signin" && (
-            <HeaderContainer>
-              <HeaderText>Welcome</HeaderText>
-              <HeaderText>Back</HeaderText>
-              <SmallText>Please sign-in to continue!</SmallText>
-            </HeaderContainer>
-          )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>Create</HeaderText>
-              <HeaderText>Account</HeaderText>
-              <SmallText>Please sign-up to continue!</SmallText>
+              <HeaderImg src={process.env.PUBLIC_URL + '/iecselogo.png'}/>
+              <HeaderText>General Body Meeting</HeaderText>
+              <SmallText>23 November, 2022</SmallText>
+              <SmallText>MV SEMINAR HALL</SmallText> 
             </HeaderContainer>
           )}
+          {active === "signin" && (
+            <HeaderContainer>
+              <HeaderText>General Body Meeting</HeaderText>
+              <SmallText>23 November, 2022</SmallText>
+              <SmallText>MV SEMINAR HALL</SmallText>
+            </HeaderContainer>
+          )}
+          
         </TopContainer>
         <InnerContainer>
-          {active === "signin" && <LoginForm />}
           {active === "signup" && <SignupForm />}
+          {active === "signin" && <LoginForm />}
+          
         </InnerContainer>
       </BoxContainer>
     </AccountContext.Provider>

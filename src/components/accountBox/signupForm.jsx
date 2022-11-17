@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import validator from 'validator'
 import {
   BoldLink,
   BoxContainer,
@@ -16,20 +17,14 @@ export function SignupForm(props) {
   return (
     <BoxContainer>
       <FormContainer>
-        <Input type="text" placeholder="Full Name" />
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
-        <Input type="password" placeholder="Confirm Password" />
+        <Input type="text" id="name" placeholder="Full Name" />
+        <Input type="text" id="reg" maxLength={9} placeholder="Registration Number" />
+        <Input type="mobile-nuumber" id="mobile" maxLength={10} placeholder="Mobile Number" />
+        <Input type="e-mail" id="email" placeholder="E-Mail ID" />
       </FormContainer>
-      <Marginer direction="vertical" margin={10} />
-      <SubmitButton type="submit">Signup</SubmitButton>
+      <Marginer direction="vertical" margin={20} />
+      <SubmitButton type="submit" href="#" onClick={switchToSignin}>Register</SubmitButton>
       <Marginer direction="vertical" margin="1em" />
-      <MutedLink href="#">
-        Already have an account?
-        <BoldLink href="#" onClick={switchToSignin}>
-          Signin
-        </BoldLink>
-      </MutedLink>
     </BoxContainer>
   );
 }
