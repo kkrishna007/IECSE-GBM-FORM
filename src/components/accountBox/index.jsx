@@ -6,8 +6,8 @@ import { AccountContext } from "./accountContext";
 import { SignupForm } from "./signupForm";
 
 const BoxContainer = styled.div`
-  width: 280px;
-  min-height: 550px;
+  width: 320px;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -34,9 +34,9 @@ const BackDrop = styled(motion.div)`
   display: flex;
   flex-direction: column;
   border-radius: 50%;
-  transform: rotate(60deg);
-  top: -290px;
-  left: -70px;
+  transform: rotate(50deg);
+  top: -320px;
+  left: -120px;
   background: rgb(241, 196, 15);
   background: linear-gradient( 58deg, rgb(0 4 255) 20%, rgb(169 0 255) 100% );
 `;
@@ -113,6 +113,10 @@ export function AccountBox(props) {
     }, expandingTransition.duration * 1000 - 1500);
   };
 
+  const switchActive = (active) => {
+    setTimeout(() => setActive(active), 400);
+  };
+
   const switchToSignup = () => {
     playExpandingAnimation();
     setTimeout(() => {
@@ -149,6 +153,7 @@ export function AccountBox(props) {
           )}
           {active === "signin" && (
             <HeaderContainer>
+              <HeaderImg src={process.env.PUBLIC_URL + '/iecselogo.png'}/>
               <HeaderText>General Body Meeting</HeaderText>
               <SmallText>23 November, 2022</SmallText>
               <SmallText>MV SEMINAR HALL</SmallText>

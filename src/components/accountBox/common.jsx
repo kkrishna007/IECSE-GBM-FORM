@@ -36,12 +36,12 @@ export const Input = styled.input`
   height: 42px;
   outline: none;
   border-radius:5px;
-  
   padding: 0px 10px;
   border: 1.5px solid rgb(73 75 218);
   transition: all 200ms ease-in-out;
   font-size: 12px;
   background-color:#050318;
+  color: #fff;
 
   &::placeholder {
     color: rgba(200, 200, 200, 1);
@@ -75,4 +75,29 @@ export const SubmitButton = styled.button`
   &:hover {
     filter: brightness(1.03);
   }
+`;
+
+export const FieldContainer  = styled.div`
+  width:100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const FieldError  = styled.span`
+  color: #b32e2e;
+  font-size: 11px;
+  min-height:12px;
+`;
+export const FormSuccess = styled.span`
+  color: #28a828;
+  font-size: 12px;
+  min-height: 20px;
+  font-weight: 600;
+`;
+
+export const FormError = styled.span`
+  color: #b32e2e;
+  font-size: 12px;
+  min-height: 20px;
+  font-weight: 600;
 `;
