@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator'
 import { Marginer } from "../marginer";
+import styled from "styled-components";
+import '../../index.css'
 import {
   // BoldLink,
   BoxContainer,
@@ -18,6 +20,7 @@ import { AccountContext } from "./accountContext";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import { Ticket } from "./Ticket";
 
 const regExp = /\b\d{9}\b/;
 const mobileExp = /\b\d{10}\b/;
@@ -101,9 +104,22 @@ export function SignupForm(props) {
   });
 
   // console.log("Error", formik.errors);
+
+  // switchToSignin
+  const switchTicket =()=>{
+   const BoxContainer = styled.div`
+   display: none;
+   opacity: 0;
+   pointer-events: none;
+   visibility: none;
+   z-index: -1;
+  `;
+  }
+
   
   return (
-    <BoxContainer>
+    <div className="wrapper">    
+    <BoxContainer >
       {!error && <FormSuccess>{success ? success : ""}</FormSuccess>}
       {!success && <FormError>{error ? error : ""}</FormError>}
       <FormContainer onSubmit={formik.handleSubmit}>
@@ -180,9 +196,12 @@ export function SignupForm(props) {
           </FieldError>
         </FieldContainer>
         <Marginer direction="vertical" margin={1} />
-        <SubmitButton type="submit" href="#" disabled={!formik.isValid} onClick={switchToSignin}>Register</SubmitButton>
+        <SubmitButton type="submit" href="#" disabled={!formik.isValid} >Register</SubmitButton>
       </FormContainer>
       <Marginer direc tion="vertical" margin="1em" />
     </BoxContainer>
+   
+    <Ticket name={values.fullName}/>
+    </div>
   );
 }

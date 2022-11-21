@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import { AccountBox } from "./components/accountBox";
+import  LoginForm  from "./components/accountBox/LoginForm";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -16,6 +17,7 @@ function App() {
   return (
     <AppContainer>
       <AccountBox />
+      {/* <LoginForm/> */}
     </AppContainer>
   );
 }
