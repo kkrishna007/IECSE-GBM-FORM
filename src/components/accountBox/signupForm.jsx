@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import validator from 'validator'
 import { Marginer } from "../marginer";
 import {
-  BoldLink,
+  // BoldLink,
   BoxContainer,
   FieldContainer,
   FieldError,
@@ -28,13 +28,10 @@ const validationSchema = yup.object({
     .min(3,"Please enter your real name")
     .required("Full Name is required"),
   regNumber: yup
-    .number("Please enter a vaild Registration Number")
+    .string().matches(regExp, {message: 'Invalid Registration Number', excludeEmptyString: true})
     .required("Registration Number is required"),
-  regNumber: yup.string().matches(regExp, {message: 'Invalid Registration Number', excludeEmptyString: true}),
-  mobileNumber:yup
-    .number("Please enter a vaild Mobile Number")
+  mobileNumber: yup.string().matches(mobileExp, {message: 'Invalid Mobile Number', excludeEmptyString: true})
     .required("Mobile Number is required"),
-  mobileNumber: yup.string().matches(mobileExp, {message: 'Invalid Mobile Number', excludeEmptyString: true}),
   email:yup
     .string()
     .email("Please enter a vaild email address")
@@ -48,37 +45,36 @@ export function SignupForm(props) {
   const [error, setError] = useState(null);
 
   const [values,setCredentials]=useState({ fullName:"",regNumber:"",mobileNumber:"",email:""})
+
   const onSubmit = async (values) => {
     const 
-    { fullName,
-      regNumber,
-      mobileNumber,
-      email } = values;
-    const navigate = useNavigate();
+    {  ...rest } = values;
+    // const navigate = useNavigate();
 
-    const response = await fetch("http://localhost:5000/api/auth/createuser",{
-      method: 'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify({ fullName,regNumber,mobileNumber,email})
+    const response =await axios.post("http://localhost:8000/api/auth/createuser",rest).catch((err)=>{
+      if(err && err.response)
+        setError(err.response.data.message);
     });
-    const json=await response.json()
-    console.log(json);
-    if(json.success){
-      localStorage.setItem('token',json.regNumber);
-      navigate("/");
-    }
-    else{
-      alert("Invalid Credentials");
-    }
 
     if (response && response.data) {
       setError(null);
       setSuccess(response.data.message);
       formik.resetForm();
-      console.log(values)
-      }
+      // console.log(values)
+  }
+
+
+    // const json=await response.json()
+    // console.log(json);
+    // if(json.success){
+    //   localStorage.setItem('token',json.regNumber);
+    //   navigate("/");
+    // }
+    // else{
+    //   alert("Invalid Credentials");
+    // }
+
+    
   }
   
   const formik = useFormik({
@@ -88,12 +84,15 @@ export function SignupForm(props) {
       mobileNumber:"", 
       email: "",
     },
-    validateOnBlur:true,
     onSubmit,
+    // : values => {
+    //   alert(JSON.stringify(values, null, 2));
+    // },
+    validateOnBlur:true,
     validationSchema: validationSchema,
   });
 
-  console.log("Error", error);
+  console.log("Error", formik.errors);
 
 
   return (
@@ -110,12 +109,16 @@ export function SignupForm(props) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+           
+
           <FieldError>
             {formik.touched.fullName && formik.errors.fullName 
             ? formik.errors.fullName
             : " "}
           </FieldError>
         </FieldContainer>
+
+
         <FieldContainer>
           <Input 
             name="regNumber" 
@@ -132,6 +135,8 @@ export function SignupForm(props) {
             : " "}
           </FieldError>
         </FieldContainer>
+
+        
         <FieldContainer>
           <Input 
             name="mobileNumber" 
@@ -147,6 +152,7 @@ export function SignupForm(props) {
             : " "}
           </FieldError>
         </FieldContainer>
+
         <FieldContainer>
           <Input 
             name="email" 

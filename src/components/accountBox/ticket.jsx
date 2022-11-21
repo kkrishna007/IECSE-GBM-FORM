@@ -24,7 +24,7 @@ export function Ticket({name}) {
                         <span className="ticket-profile_githubIcon">
                           <img src="./github.svg" alt="" />
                         </span>
-                        kkrishna007
+                        kkrishna007mmmmmmmm
                       </p>
                     </div>
                   </div>
