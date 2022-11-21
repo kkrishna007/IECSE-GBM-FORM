@@ -44,23 +44,30 @@ export function SignupForm(props) {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
-  const [values,setCredentials]=useState({ fullName:"",regNumber:"",mobileNumber:"",email:""})
+  const [values,setCredentials]=useState({ fullName:"",regNumber:"",mobileNumber:"",email:""});
+  const [name,setName]=useState("");
 
   const onSubmit = async (values) => {
     const 
     {  ...rest } = values;
-    // const navigate = useNavigate();
 
     const response =await axios.post("http://localhost:8000/api/auth/createuser",rest).catch((err)=>{
       if(err && err.response)
         setError(err.response.data.message);
     });
 
+    setCredentials(response.data);
+    // console.log(response.data)
+
+    //gives the fullname
+    console.log(values.fullName)
+    
+
     if (response && response.data) {
       setError(null);
       setSuccess(response.data.message);
       formik.resetForm();
-      // console.log(values)
+
   }
 
 
@@ -74,6 +81,7 @@ export function SignupForm(props) {
     //   alert("Invalid Credentials");
     // }
 
+    
     
   }
   
@@ -92,9 +100,8 @@ export function SignupForm(props) {
     validationSchema: validationSchema,
   });
 
-  console.log("Error", formik.errors);
-
-
+  // console.log("Error", formik.errors);
+  
   return (
     <BoxContainer>
       {!error && <FormSuccess>{success ? success : ""}</FormSuccess>}
@@ -162,6 +169,10 @@ export function SignupForm(props) {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+
+          {/* Gives the user name  */}
+          {values.fullName}
+
           <FieldError>
             {formik.touched.email && formik.errors.email 
             ? formik.errors.email

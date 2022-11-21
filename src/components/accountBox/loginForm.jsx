@@ -17,6 +17,7 @@ export function LoginForm(props) {
 
   return (
     <BoxContainer>
+      
       <Ticket/>
     </BoxContainer>
   );
